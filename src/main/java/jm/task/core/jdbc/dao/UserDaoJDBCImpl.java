@@ -34,9 +34,8 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try {
-            PreparedStatement preparedStatement = Util.getConnection().
-                    prepareStatement("INSERT INTO users (name,lastName,age) values(?,?,?)");
+        try (PreparedStatement preparedStatement = Util.getConnection().
+                    prepareStatement("INSERT INTO users (name,lastName,age) values(?,?,?)")) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
@@ -48,15 +47,11 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = Util.getConnection().
-                    prepareStatement("DELETE FROM users WHERE id = ?");
+        try (PreparedStatement preparedStatement = Util.getConnection().
+                    prepareStatement("DELETE FROM users WHERE id = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -76,9 +71,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setId(id);
                 users.add(user);
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return users;
