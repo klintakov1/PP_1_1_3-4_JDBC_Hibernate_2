@@ -8,11 +8,11 @@ public class Util {
     private static final String PASS = "root";
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Connection connection = null;
+        Connection connection;
         Driver driver = new com.mysql.cj.jdbc.Driver();
         DriverManager.registerDriver(driver);
         connection = DriverManager.getConnection(URL, USERNAME, PASS);
-        Statement statement = connection.createStatement();
+
 
         return connection;
     }
