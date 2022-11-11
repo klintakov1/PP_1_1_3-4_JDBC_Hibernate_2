@@ -32,7 +32,6 @@ public class UserDaoJDBCImpl implements UserDao {
             throw new RuntimeException(e);
         }
     }
-
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement preparedStatement = Util.getConnection().
                     prepareStatement("INSERT INTO users (name,lastName,age) values(?,?,?)")) {
