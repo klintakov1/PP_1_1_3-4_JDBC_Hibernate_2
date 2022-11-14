@@ -20,10 +20,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
         try {
             session.beginTransaction();//проверит, есть ли уже существующая транзакция, если да, то не создаст новую транзакцию
-            session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (`id` INT NOT NULL AUTO_INCREMENT," +
-                    "`name` VARCHAR(45) NULL,`lastName` VARCHAR(45)" +
-                    " NULL,`age` VARCHAR(45) NULL, PRIMARY KEY (`id`)," +
-                    "UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)").executeUpdate();//транзакция.фиксация();
+            session.createSQLQuery("CREATE TABLE IF NOT EXISTS users (id INT NOT NULL AUTO_INCREMENT," +
+                    "name VARCHAR(45) NULL,lastName VARCHAR(45)" +
+                    " NULL, age VARCHAR(45) NULL, PRIMARY KEY (id)," +
+                    " UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE)").executeUpdate();//транзакция.фиксация();
             session.getTransaction().commit();//возвращаемый результат;
         } catch (HibernateException e) {
             e.getStackTrace();
